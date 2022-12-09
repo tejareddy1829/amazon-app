@@ -4,7 +4,7 @@ import {MenuIcon, SearchIcon, ShoppingCartIcon} from "@heroicons/react/outline";
 
 function Header() {
   return (
-    <header className='flex'>
+    <header>
       {/* top nav */}
       <div className='flex items-center bg-amazon_blue p-1 flex-grow py-2'>
         <div className='mt-2 flex items-center flex-grow sm:flex-grow-0'>
@@ -37,7 +37,7 @@ function Header() {
             <p className='font-extrabold md:text-sm'>& Orders</p>
           </div>
           <div className='relative link flex items-center'>
-            <span className='absolute top-0 right-0 md:right-10 h-4 w-4'>
+            <span className='absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center text-black rounded-full font-bold'>
               0
             </span>
 
@@ -49,7 +49,21 @@ function Header() {
         </div>
       </div>
       {/* bottom nav */}
-      <div></div>
+      <div className='flex items-center space-x-3 p-2 bg-amazon_blue-light text-white text-sm '>
+        <p className='link flex items-center'>
+          <MenuIcon className='h-6 mr-1' />
+          All
+        </p>
+        <p className='link'>Prime Vedio</p>
+        <p className='link'>Amazon Bussiness</p>
+        <p className='link'>Today's Deal</p>
+        <p className='link hidden lg:inline-flex'>Electronics</p>
+        <p className='link hidden lg:inline-flex'>Food & Grocery</p>
+        <p className='link hidden lg:inline-flex'>Prime</p>
+        <p className='link hidden lg:inline-flex'>Buy Again</p>
+        <p className='link hidden lg:inline-flex'>Shopper Toolkit</p>
+        <p className='link hidden lg:inline-flex'>Health & Personal Care</p>
+      </div>
     </header>
   );
 }
