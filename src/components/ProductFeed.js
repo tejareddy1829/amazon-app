@@ -1,9 +1,23 @@
-import React from 'react'
+import React from "react";
+import Product from "./Product";
 
-function ProductFeed() {
+function ProductFeed({products}) {
   return (
-    <div>Product...</div>
-  )
+    <div>
+      <h1>Product...</h1>
+      {products.map(({id, title, description, price, category, image}) => (
+        <Product
+          key={id}
+          id={id}
+          title={title}
+          description={description}
+          price={price}
+          category={category}
+          image={image}
+        />
+      ))}
+    </div>
+  );
 }
 
-export default ProductFeed
+export default ProductFeed;
