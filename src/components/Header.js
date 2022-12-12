@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import {MenuIcon, SearchIcon, ShoppingCartIcon} from "@heroicons/react/outline";
+import {signIn, signOut, useSession} from "next-auth/client";
 
 function Header() {
   return (
@@ -12,7 +13,7 @@ function Header() {
             src='http://links.papareact.com/f90'
             width={150}
             height={40}
-            objectFit='contain'
+            style='contain'
             className='cursor-pointer'
           />
         </div>
@@ -28,11 +29,11 @@ function Header() {
 
         {/* right-side */}
         <div className='text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap'>
-          <div className='link'>
+          <div onClick={signIn} className='cursor-pointer link'>
             <p>Hello Teja Reddy</p>
             <p className='font-extrabold md:text-sm'>Accounts & Lists</p>
           </div>
-          <div className='link'>
+          <div className='cursor-pointer link'>
             <p>Returns</p>
             <p className='font-extrabold md:text-sm'>& Orders</p>
           </div>

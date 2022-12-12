@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import {StarIcon} from "@heroicons/react/solid";
 import Currency from "react-currency-formatter";
@@ -7,11 +7,16 @@ const MAX_RATING = 5;
 const MIN_RATING = 1;
 
 function Product({id, title, description, price, category, image}) {
-  const [rating] = useState(
-    Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
-  );
+  const [rating, setRating] = useState(0);
 
-  const [hasPrime] = useState(Math.random() < 0.5);
+  const [hasPrime, setIsPrimeEnabled] = useState(0);
+
+  useEffect(() => {
+    setRating(
+      Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
+    );
+    setIsPrimeEnabled(Math.random() < 0.5);
+  }, []);
 
   return (
     <div className='relative flex flex-col bg-white m-5 z-30 p-10'>
@@ -19,7 +24,7 @@ function Product({id, title, description, price, category, image}) {
         {category}
       </p>
 
-      <Image src={image} height={200} width={200} objectFit='contain' />
+      <Image src={image} height={200} width={200} style='contain' />
 
       <h4 className='my-3'>{title}</h4>
 
@@ -27,7 +32,7 @@ function Product({id, title, description, price, category, image}) {
         {Array(rating)
           .fill()
           .map((_, i) => (
-            <StarIcon className='h-5 text-yellow-500' key={i}/>
+            <StarIcon className='h-5 text-yellow-500' key={i} />
           ))}
       </div>
 
@@ -39,12 +44,12 @@ function Product({id, title, description, price, category, image}) {
 
       {hasPrime && (
         <div className='flex items-center space-x-2 -mt-5'>
-          <img className='w-12' src='http://links.papareact.com/fdw' alt='' />
+          <img className='w-12' src='http://links.papareact.com/fdw' />
           <p className='text-xs text-gray-500'>Free Next-Day Delivery</p>
         </div>
       )}
 
-      <button className="mt-auto button">Add To Basket</button>
+      <button className='mt-auto button'>Add To Basket</button>
     </div>
   );
 }
