@@ -2,11 +2,15 @@ import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import {StarIcon} from "@heroicons/react/solid";
 import Currency from "react-currency-formatter";
+import {useDispatch} from "react-redux";
+import {addToBasket} from "../slices/basketSlice";
 
 const MAX_RATING = 5;
 const MIN_RATING = 1;
 
 function Product({id, title, description, price, category, image}) {
+  const dispatch = useDispatch();
+
   const [rating, setRating] = useState(0);
 
   const [hasPrime, setIsPrimeEnabled] = useState(0);
@@ -17,6 +21,19 @@ function Product({id, title, description, price, category, image}) {
     );
     setIsPrimeEnabled(Math.random() < 0.5);
   }, []);
+
+  const addItemsToBasket = () => {
+    const product = {
+      id,
+      title,
+      description,
+      price,
+      category,
+      image,
+    };
+
+    dispatch(addToBasket(product));
+  };
 
   return (
     <div className='relative flex flex-col bg-white m-5 z-30 p-10'>
@@ -49,7 +66,9 @@ function Product({id, title, description, price, category, image}) {
         </div>
       )}
 
-      <button className='mt-auto button'>Add To Basket</button>
+      <button onClick={addItemsToBasket} className='mt-auto button'>
+        Add To Basket
+      </button>
     </div>
   );
 }
