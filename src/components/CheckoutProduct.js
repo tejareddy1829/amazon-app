@@ -17,7 +17,7 @@ function CheckoutProduct({
     <div className='grid grid-cols-5'>
       <Image src={image} height={200} width={200} objectFit='contain' />
 
-      <div className='col-span-4 mx-5'>
+      <div className='col-span-3 mx-5'>
         <p>{title}</p>
         <div className='flex'>
           {Array(rating)
@@ -39,6 +39,10 @@ function CheckoutProduct({
             <p className='text-xs text-gray-500'>Free Next-Day Delivery</p>
           </div>
         )}
+      </div>
+      <div className='flex flex-col space-y-2 my-auto justify-self-end'>
+        <button className='button'>Add To Basket</button>
+        <button className='button'>Remove From Basket</button>
       </div>
     </div>
   );
