@@ -30,6 +30,8 @@ function Product({id, title, description, price, category, image}) {
       price,
       category,
       image,
+      rating,
+      hasPrime,
     };
 
     dispatch(addToBasket(product));
