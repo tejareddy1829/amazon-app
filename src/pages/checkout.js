@@ -4,6 +4,7 @@ import Image from "next/image";
 import {useSelector} from "react-redux";
 import {selectItems} from "../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
+import Currency from "react-currency-formatter";
 
 function checkout() {
   const items = useSelector(selectItems);
@@ -43,7 +44,18 @@ function checkout() {
         </div>
 
         {/* right */}
-        <div></div>
+        <div>
+          {items.length > 0 && (
+            <>
+              <h2>
+                Subtotal ({items.length} items) :
+                <span>
+                  <Currency quantity={total} currency='GBP' />
+                </span>
+              </h2>
+            </>
+          )}
+        </div>
       </main>
     </div>
   );
