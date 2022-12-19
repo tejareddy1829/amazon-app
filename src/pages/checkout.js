@@ -5,9 +5,12 @@ import {useSelector} from "react-redux";
 import {selectItems} from "../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
 import Currency from "react-currency-formatter";
+import {useSession} from "next-auth/client";
 
 function checkout() {
   const items = useSelector(selectItems);
+  const [session] = useSession();
+
   return (
     <div className='bg-gray-100'>
       <Header />
@@ -47,12 +50,17 @@ function checkout() {
         <div>
           {items.length > 0 && (
             <>
-              <h2>
+              <h2 className='whitespace-nowrap'>
                 Subtotal ({items.length} items) :
-                <span>
-                  <Currency quantity={total} currency='GBP' />
+                <span className='font-bold'>
+                  {/* <Currency quantity={total} currency='GBP' /> */}
                 </span>
               </h2>
+
+              <button
+                className={` button mt-2  ${!session && "sessionButton"} `}>
+                {!session ? "sign in to checkout" : "proceed to checkout"}
+              </button>
             </>
           )}
         </div>
