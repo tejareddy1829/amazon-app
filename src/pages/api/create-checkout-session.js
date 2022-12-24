@@ -23,8 +23,8 @@ export default async (req, res) => {
     success_url: `${process.env.HOST}/success`,
     cancel_url: `${process.env.HOST}/checkout`,
     metadata: {
-        email,
-        images: 
-    }
+      email,
+      images: JSON.stringify(items.map((item) => item.image)),
+    },
   });
 };
