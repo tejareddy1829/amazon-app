@@ -19,5 +19,12 @@ export default async (res, req) => {
     const sig = req.headers["stripe-signature"];
 
     let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    } catch (err) {
+      console.log("ERROR", err.message);
+      return res.status(400).send(`webhook error: ${err.message}`);
+    }
   }
 };
