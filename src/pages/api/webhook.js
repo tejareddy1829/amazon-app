@@ -1,5 +1,6 @@
 import {buffer} from "micro";
 import * as admin from "firebase-admin";
+import { session } from "next-auth/client";
 
 const serviceAccount = require("../../../permissions.json");
 
@@ -12,6 +13,11 @@ const app = !admin.apps.length
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
+
+const fulfillOrder= async (session) => {
+    
+}
+
 export default async (res, req) => {
   if (req.method === "POST") {
     const requestBuffer = await buffer(req);
