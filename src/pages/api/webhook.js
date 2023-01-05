@@ -1,6 +1,6 @@
 import {buffer} from "micro";
 import * as admin from "firebase-admin";
-import { session } from "next-auth/client";
+import {session} from "next-auth/client";
 
 const serviceAccount = require("../../../permissions.json");
 
@@ -14,9 +14,13 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const endpointSecret = process.env.STRIPE_SIGNING_SECRET;
 
-const fulfillOrder= async (session) => {
-    
-}
+const fulfillOrder = async (session) => {
+  return app
+    .firestore()
+    .collection("users")
+    .doc(session.metadata.email)
+    .collection("orders");
+};
 
 export default async (res, req) => {
   if (req.method === "POST") {
@@ -33,8 +37,8 @@ export default async (res, req) => {
       return res.status(400).send(`webhook error: ${err.message}`);
     }
 
-    if(event.type ==='checkout.session.completed') {
-        const session = event.data.object;
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
     }
   }
 };
