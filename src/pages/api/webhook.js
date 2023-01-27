@@ -24,8 +24,6 @@ const fulfillOrder = async (session) => {
       amount_shopping: session.total_details.amount_shipping / 100,
       images: JSON.parse(session.metadata.images),
       timestamp: admin.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-      console.log(`success: order ${session.id} has been added to db`)
     })
 };
 
