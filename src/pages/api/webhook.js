@@ -19,7 +19,14 @@ const fulfillOrder = async (session) => {
     .firestore()
     .collection("users")
     .doc(session.metadata.email)
-    .collection("orders");
+    .collection("orders").doc(session.id).set({
+      amount: session.amount_total / 100,
+      amount_shopping: session.total_details.amount_shipping / 100,
+      images: JSON.parse(session.metadata.images),
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+      console.log(`success: order ${session.id} has been added to db`)
+    })
 };
 
 export default async (res, req) => {
