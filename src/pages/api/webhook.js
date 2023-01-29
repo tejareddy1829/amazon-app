@@ -1,6 +1,5 @@
 import {buffer} from "micro";
 import * as admin from "firebase-admin";
-import {session} from "next-auth/client";
 
 const serviceAccount = require("../../../permissions.json");
 
@@ -39,7 +38,7 @@ export default async (res, req) => {
     const sig = req.headers["stripe-signature"];
 
     let event;
-
+    console.log("POST");
     try {
       event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
     } catch (err) {
@@ -52,7 +51,7 @@ export default async (res, req) => {
 
       return fulfillOrder(session)
         .then(() => res.status(200))
-        .catch(() => res.status(400))
+        .catch((e) => console.log({e}))
         .send(`webhook error: ${err.message}`);
     }
   }
