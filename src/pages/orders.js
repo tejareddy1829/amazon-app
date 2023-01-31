@@ -1,6 +1,8 @@
 import {getSession, useSession} from 'next-auth/client';
+import {delBasePath} from 'next/dist/next-server/lib/router/router';
 import React from 'react';
 import Header from '../components/Header';
+import moment from 'moment';
 
 function Orders({orders}) {
   const session = useSession();
@@ -36,5 +38,20 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const stripeOrders = await db;
+  const stripeOrders = await db
+    .collection('users')
+    .doc(session.user.email)
+    .collection('orders')
+    .orderBy('timestamp', 'desc')
+    .get();
+
+  const orders = await Promise.all(
+    stripeOrders.docs.map(async (order) => ({
+      id: order.id,
+      amount: order.data().amount,
+      amountShipping: order.data().amount_shipping,
+      images: order.data().images,
+      timestamp: moment(order.data().timestamp.toDate()).unix(),
+    }))
+  );
 }
