@@ -1,8 +1,8 @@
 import {getSession, useSession} from 'next-auth/client';
-import {delBasePath} from 'next/dist/next-server/lib/router/router';
 import React from 'react';
 import Header from '../components/Header';
 import moment from 'moment';
+import db from '../../firebase';
 
 function Orders({orders}) {
   const session = useSession();
@@ -30,7 +30,7 @@ export default Orders;
 export async function getServerSideProps(context) {
   const stripe = require('stripe')(process.env.STRIPE_SECRERT_KEY);
 
-  const session = getSession(context);
+  const session = await getSession(context);
 
   if (!session) {
     return {
@@ -52,6 +52,17 @@ export async function getServerSideProps(context) {
       amountShipping: order.data().amount_shipping,
       images: order.data().images,
       timestamp: moment(order.data().timestamp.toDate()).unix(),
+      items: (
+        await stripe.checkout.sessions.listlineitems(order.id, {
+          limit: 100,
+        })
+      ).data,
     }))
   );
+
+  return {
+    props: {
+      orders,
+    },
+  };
 }
