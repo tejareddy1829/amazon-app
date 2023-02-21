@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Image from "next/image";
 import {StarIcon} from "@heroicons/react/solid";
-import Currency from "react-currency-formatter";
+import Currency from "currency.js";
 import {useDispatch} from "react-redux";
 import {addToBasket} from "../slices/basketSlice";
 
@@ -58,7 +58,7 @@ function Product({id, title, description, price, category, image}) {
       <p className='text-xs my-2 line-clamp-2'>{description}</p>
 
       <div className='mb-5'>
-        <Currency quantity={price} currency='GBP' />
+        {Currency(price).format()}
       </div>
 
       {hasPrime && (

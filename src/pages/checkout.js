@@ -4,7 +4,7 @@ import Image from "next/image";
 import {useSelector} from "react-redux";
 import {selectItems, selectTotal} from "../slices/basketSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
-import Currency from "react-currency-formatter";
+import Currency from "currency.js";
 import {useSession} from "next-auth/client";
 import {loadStripe} from "@stripe/stripe-js";
 import axios from "axios";
@@ -78,7 +78,7 @@ function checkout() {
               <h2 className='whitespace-nowrap'>
                 Subtotal ({items.length} items) :
                 <span className='font-bold ml-2'>
-                  {<Currency quantity={total} currency='GBP' />}
+                {Currency(total).format()}
                 </span>
               </h2>
 
